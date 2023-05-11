@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">SMART 神经网络鲁棒性评估平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入您的邮箱"
           name="username"
           type="text"
           tabindex="1"
@@ -30,7 +30,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入您的密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -41,45 +41,39 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;font-size: 20px"
+        @click.native.prevent="handleLogin"
+      >登 录
+      </el-button>
 
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <p class="tips">
+        <a type="primary" @click="$router.push('/register')">还没有帐号？立即注册</a>
+      </p>
 
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'pandada@sjtu.edu.cn',
+        password: '123456Abc'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ type: 'email', required: true, trigger: 'blur', message: '请输入邮箱' }],
+        password: [{
+          required: true,
+          message: '创建密码',
+          trigger: 'blur'
+        }, { pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/, message: '密码必须同时包含数字与字母,且长度为 8-20位' }]
       },
       loading: false,
       passwordType: 'password',
@@ -143,6 +137,8 @@ $cursor: #fff;
 .login-container {
   .el-input {
     display: inline-block;
+    //padding: 10px 10px 10px 10px;
+    font-size: 18px;
     height: 47px;
     width: 85%;
 
@@ -180,21 +176,24 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  //background-color: $bg;
+  background-image: url("../../icons/bg.png");
+  background-repeat: no-repeat;
   overflow: hidden;
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 800px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 200px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
 
   .tips {
-    font-size: 14px;
-    color: #fff;
+    float: right;
+    font-size: 18px;
+    color: #bbb8b8;
     margin-bottom: 10px;
 
     span {
@@ -205,10 +204,11 @@ $light_gray:#eee;
   }
 
   .svg-container {
-    padding: 6px 5px 6px 15px;
+    padding: 5px 10px 5px 10px;
+    font-size: 20px;
     color: $dark_gray;
     vertical-align: middle;
-    width: 30px;
+    width: 40px;
     display: inline-block;
   }
 
@@ -216,9 +216,9 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 40px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0px auto 80px auto;
       text-align: center;
       font-weight: bold;
     }
@@ -233,5 +233,18 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+}
+</style>
+
+<style scoped>
+/* 修改验证器样式 */
+/deep/ .el-form-item.is-error .el-input__inner {
+  border-color: #889aa4;
+}
+/deep/ .el-form-item.is-error .el-input__validateIcon {
+  color: #889aa4;
+}
+/deep/ .el-form-item__error {
+  color: #e6a23c;
 }
 </style>
