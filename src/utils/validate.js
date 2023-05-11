@@ -18,3 +18,13 @@ export function validUsername(str) {
   const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
+
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ * */
+// 这是新增的验证邮箱的函数
+export function validEmail(str) {
+  const emailReg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+  return emailReg.test(str)
+}

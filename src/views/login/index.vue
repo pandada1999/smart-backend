@@ -58,7 +58,7 @@
 </template>
 
 <script>
-
+import { validEmail } from '@/utils/validate'
 export default {
   name: 'Login',
   data() {
@@ -100,20 +100,20 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      var valid = validEmail(this.loginForm.username)
+      if (valid) {
+        this.loading = true
+        this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$router.push({ path: this.redirect || '/' })
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+        })
+      } else {
+        console.log('error submit!!')
+        return false
+      }
+      // })
     }
   }
 }
@@ -183,7 +183,7 @@ $light_gray:#eee;
 
   .login-form {
     position: relative;
-    width: 800px;
+    width: 700px;
     max-width: 100%;
     padding: 200px 35px 0;
     margin: 0 auto;

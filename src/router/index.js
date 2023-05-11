@@ -49,7 +49,7 @@ export const constantRoutes = [
     hidden: true
   },
 
-  {
+  { // 只是创建了一个基于layout的一级路由，你还需要在它下面的 children 中添加子路由。
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -65,7 +65,6 @@ export const constantRoutes = [
     path: '/example',
     component: Layout,
     redirect: '/example/table',
-
     children: [
       {
         path: 'table',
