@@ -32,6 +32,7 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    name: 'login',
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -55,7 +56,7 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: '首页',
+      name: 'Index',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
@@ -68,7 +69,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'table',
-        name: '模型列表',
+        name: 'ModelList',
         component: () => import('@/views/table/index'),
         meta: { title: '模型列表', icon: 'el-icon-s-help' }
 
@@ -82,7 +83,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        name: '模型上传',
+        name: 'ModelUpload',
         component: () => import('@/views/form/index'),
         meta: { title: '模型上传', icon: 'form' }
       }

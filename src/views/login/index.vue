@@ -59,16 +59,32 @@
 
 <script>
 import { validEmail } from '@/utils/validate'
+import md5 from 'js-md5'
+// import { encrypt } from '@/utils/rsaEncrypt'
 export default {
   name: 'Login',
   data() {
+    // 邮箱验证的函数写在这里
+    const validateEmail = (rule, value, callback) => {
+      if (!validEmail(value)) {
+        callback(new Error('邮箱格式不正确'))
+      } else {
+        callback()
+      }
+    }
     return {
       loginForm: {
         username: 'pandada@sjtu.edu.cn',
         password: '123456Abc'
       },
       loginRules: {
-        username: [{ type: 'email', required: true, trigger: 'blur', message: '请输入邮箱' }],
+        username: [{
+          // type: 'email',
+          required: true,
+          trigger: 'blur',
+          // message: '请输入邮箱',
+          validator: validateEmail
+        }],
         password: [{
           required: true,
           message: '创建密码',
@@ -84,6 +100,13 @@ export default {
     $route: {
       handler: function(route) {
         this.redirect = route.query && route.query.redirect
+        // 从注册界面过来时，自动填充为对应的值
+        if (this.$route.params.username != null) {
+          console.log(this.$route.params.username)
+          console.log(this.$route.params.password)
+          this.loginForm.username = this.$route.params.username
+          this.loginForm.password = this.$route.params.password
+        }
       },
       immediate: true
     }
@@ -100,20 +123,25 @@ export default {
       })
     },
     handleLogin() {
-      var valid = validEmail(this.loginForm.username)
-      if (valid) {
-        this.loading = true
-        this.$store.dispatch('user/login', this.loginForm).then(() => {
-          this.$router.push({ path: this.redirect || '/' })
-          this.loading = false
-        }).catch(() => {
-          this.loading = false
-        })
-      } else {
-        console.log('error submit!!')
-        return false
-      }
-      // })
+      this.$refs['loginForm'].validate((valid) => {
+        if (valid) {
+          // console.log('valid:' + valid)
+          const user = {
+            username: this.loginForm.username,
+            password: md5(this.loginForm.password)
+          }
+          this.loading = true
+          this.$store.dispatch('user/login', user).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }

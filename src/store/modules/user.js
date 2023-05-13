@@ -35,8 +35,8 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         console.log(data)
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data.token) // 存到 vuex(store)
+        setToken(data.token) // 存到 cookie
         resolve()
       }).catch(error => {
         reject(error)
@@ -51,12 +51,12 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          return reject('Verification failed, please Login again.')
+          return reject('验证失败，请登录！')
         }
 
-        const { name, avatar } = data
+        const { username, avatar } = data
 
-        commit('SET_NAME', name)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {

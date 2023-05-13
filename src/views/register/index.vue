@@ -2,8 +2,8 @@
   <div class="register-container">
 
     <el-form
-      class="register-form"
       ref="ruleForm"
+      class="register-form"
       :model="ruleForm"
       :rules="rules"
       autocomplete="off"
@@ -15,29 +15,37 @@
 
       <div class="title-container" style="margin-right: 10%">
         <h3 class="title">
-          <i class="el-icon-user-solid"></i>
+          <i class="el-icon-user-solid" />
           用户注册</h3>
       </div>
 
       <el-form-item class="el-form-item" label="输入邮箱" style="font-size: 20px" prop="email">
-        <el-col style="width:80%">
+        <el-col style="width:70%">
           <el-input
             v-model="ruleForm.email"
             placeholder="请输入邮箱并点击发送验证码"
           />
         </el-col>
-        <el-button
-          :loading="codeLoading"
-          :disabled="isDisable"
-          size="small"
-          round
-          @click="sendMsg"
-        >发送验证码</el-button>
-
-        <span class="status">{{ statusMsg }}</span>
+        <el-col style="width:30%">
+          <el-form>
+            <el-form-item>
+              <el-button
+                :loading="codeLoading"
+                :disabled="isDisable"
+                size="large"
+                round
+                @click="sendMsg"
+              >发送验证码</el-button>
+            </el-form-item>
+            <el-form-item>
+              <span class="status" style="color: white; margin: 5px">{{ statusMsg }}</span>
+            </el-form-item>
+          </el-form>
+        </el-col>
       </el-form-item>
+
       <el-form-item label="验证码" prop="code">
-        <el-col style="width:80%">
+        <el-col style="width:70%">
           <el-input
             v-model="ruleForm.code"
             maxlength="6"
@@ -46,12 +54,12 @@
         </el-col>
       </el-form-item>
       <el-form-item label="输入密码" prop="pwd">
-        <el-col style="width:80%">
-          <el-input v-model="ruleForm.pwd" type="password" placeholder="请输入密码"/>
+        <el-col style="width:70%">
+          <el-input v-model="ruleForm.pwd" type="password" placeholder="请输入密码" />
         </el-col>
       </el-form-item>
       <el-form-item label="确认密码" prop="cpwd">
-        <el-col style="width:80%">
+        <el-col style="width:70%">
           <el-input v-model="ruleForm.cpwd" type="password" placeholder="请确认密码" />
         </el-col>
       </el-form-item>
@@ -75,7 +83,8 @@
 
 <script>
 import { getEmailCode, register } from '@/api/register'
-import { encrypt } from '@/utils/rsaEncrypt'
+import md5 from 'js-md5'
+// import { encrypt } from '@/utils/rsaEncrypt'
 export default {
   name: 'Register',
   data() {
@@ -85,10 +94,10 @@ export default {
       isDisable: false,
       codeLoading: false,
       ruleForm: {
-        email: '',
-        code: '',
-        pwd: '',
-        cpwd: ''
+        email: 'zhangbw@sjtu.edu.cn',
+        code: '123456',
+        pwd: '123456Abc',
+        cpwd: '123456Abc'
       },
       rules: {
         email: [{
@@ -139,6 +148,7 @@ export default {
       self.statusMsg = ''
       this.$refs['ruleForm'].validateField('email', (valid) => {
         emailPass = valid
+        console.log(valid)
       })
       // 向后台API验证码发送
       if (!emailPass) {
@@ -154,9 +164,9 @@ export default {
           self.ruleForm.code = ''
           self.codeLoading = false
           self.isDisable = true
-          self.statusMsg = `验证码已发送,${count--}秒后重新发送`
+          self.statusMsg = `$\n{count--}秒后重新发送`
           timerid = window.setInterval(function() {
-            self.statusMsg = `验证码已发送,${count--}秒后重新发送`
+            self.statusMsg = `\n${count--}秒后重新发送`
             if (count <= 0) {
               window.clearInterval(timerid)
               self.isDisable = false
@@ -179,7 +189,8 @@ export default {
           const user = {
             email: this.ruleForm.email,
             code: this.ruleForm.code,
-            password: encrypt(this.ruleForm.pwd)
+            // password: encrypt(this.ruleForm.pwd)
+            password: md5(this.ruleForm.pwd)
           }
           register(this.ruleForm.code, user).then(res => {
             this.$message({
@@ -188,8 +199,12 @@ export default {
               type: 'success'
             })
             setTimeout(() => {
-              this.$router.push('/')
-            }, 2000)
+              // 路由跳转传参，在跳转到 login 界面后自动填充
+              this.$router.push({ name: 'login', params: {
+                username: this.ruleForm.email,
+                password: this.ruleForm.pwd
+              }})
+            }, 1000)
           }).catch(err => {
             console.log(err.response.data.message)
           })
@@ -263,7 +278,7 @@ $light_gray: #eee;
 
   .register-form {
     position: relative;
-    width: 800px;
+    width: 900px;
     max-width: 100%;
     padding: 200px 35px 0;
     margin: 0 auto;

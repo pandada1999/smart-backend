@@ -5,7 +5,7 @@ export function getEmailCode(email) {
   return request({
     url: '/user/register/getEmailCode',
     method: 'post',
-    email
+    data: { 'email': email }
   })
 }
 
@@ -14,6 +14,6 @@ export function register(code, data) {
   return request({
     url: '/user/register?code=' + code,
     method: 'post',
-    data
+    data: data
   })
 }
