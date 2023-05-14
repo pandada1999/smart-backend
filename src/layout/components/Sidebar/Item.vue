@@ -25,7 +25,7 @@ export default {
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      vnodes.push(<span class='sidebarSpan' slot='title'>{(title)}</span>)
     }
     return vnodes
   }
@@ -35,7 +35,13 @@ export default {
 <style scoped>
 .sub-el-icon {
   color: currentColor;
+  font-size: large;
   width: 1em;
   height: 1em;
+}
+.sidebarSpan{
+  font-size: 15px;
+  font-family: “Arial”,”Microsoft YaHei”,”黑体”,”宋体”,sans-serif;
+  font-weight: bold;
 }
 </style>

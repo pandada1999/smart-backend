@@ -1,34 +1,38 @@
 <template>
   <div class="dashboard-container">
-    <el-row :gutter="20">
-      <el-col :span="8">
-        <div>
-          <!-- 首页user信息 -->
-          <el-card shadow="hover">
-            <div class="userCard">
-              <el-avatar :size="150" :src="imgUrl" />
-              <div class="userInfo">
-                <p class="important-font">{{ name }}</p>
-                <p class="secondary-font">
-                  您好，欢迎使用 SMART 神经网络鲁棒性评估平台。
-                  您可以在侧边栏查看您的模型列表，或上传您的测试模型。
-                </p>
+    <!--  基于1/24 布局， row设置行高 col设置列宽  -->
+    <el-row>
+      <el-col :span="12">
+        <!-- 首页user信息 -->
+        <el-card shadow="hover">
+          <el-row :gutter="18">
+            <el-col :span="7">
+              <div class="userImg">
+                <el-avatar :size="100" :src="imgUrl" />
               </div>
-            </div>
-            <div class="login-info">
+            </el-col>
+            <el-col :span="16">
+              <p class="important-font">{{ name }}</p>
+              <p class="secondary-font">
+                您好，欢迎使用 SMART 神经网络鲁棒性评估平台。
+                您可以在侧边栏查看您的模型列表，或上传您的测试模型。
+              </p>
+            </el-col>
+          </el-row>
+          <el-row >
+            <el-col :span="22" :offset="2" class="login-info">
               <p>登陆时间：{{ value }}</p>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="16">
-        <div style="height: 200px"></div>
-        <div class="last-image" style="padding: 0 100px">
-          <img src="@/icons/index.gif">
-        </div>
+            </el-col>
+          </el-row>
 
+
+        </el-card>
+      </el-col>
+      <el-col :span="11" offset="1">
+        <img src="@/icons/index.gif" class="last-image" >
       </el-col>
     </el-row>
+
   </div>
 
 </template>
@@ -155,29 +159,33 @@ export default {
 .dashboard-container {
   margin: 30px;
 
-  .userCard {
-    height: 180px;
-    display: flex;
-    border-bottom: 2px solid #DCDFE6;
-    border-radius: 2px;
+  .userImg{
+    width: 100%;
+    height: auto;
+    padding: 30px 10px 10px 30px;
   }
-  .userInfo{
-    width: 65%;
-    text-align: justify;
-    padding: 0 0 0 6%;
-  }
+
   .important-font{
     font-weight: 900;
-    font-size: 25px;
-    //margin-bottom: 15%;
+    font-size: 24px;
+    font-family: 微软雅黑;
+    padding: 0 0 0 20px;
   }
+
   .secondary-font{
     color: #909399;
+    padding: 0 0 0 20px;
+    width: 100%;
   }
+
   .login-info{
-    height: 40px;
+    height: 20px;
     text-align: left;
     color: #909399;
+    padding: 0 0 0 20px;
+    margin: 20px;
+    border-top: 2px solid #DCDFE6;
+    border-radius: 2px;
   }
 
   .tableInfo{
@@ -186,8 +194,10 @@ export default {
 
   .last-image{
     text-align: right;
+    position: center;
+    width: 100%;
+    height: auto;
   }
-
 }
 </style>
 

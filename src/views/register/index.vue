@@ -1,81 +1,74 @@
 <template>
   <div class="register-container">
 
-    <el-form
-      ref="ruleForm"
-      class="register-form"
-      :model="ruleForm"
-      :rules="rules"
-      autocomplete="off"
-      label-position="right"
-      label-width="80px"
-      hide-required-asterisk="true"
-      size="large"
-    >
-
-      <div class="title-container" style="margin-right: 10%">
-        <h3 class="title">
-          <i class="el-icon-user-solid" />
-          用户注册</h3>
-      </div>
-
-      <el-form-item class="el-form-item" label="输入邮箱" style="font-size: 20px" prop="email">
-        <el-col style="width:70%">
-          <el-input
-            v-model="ruleForm.email"
-            placeholder="请输入邮箱并点击发送验证码"
-          />
-        </el-col>
-        <el-col style="width:30%">
-          <el-form>
-            <el-form-item>
-              <el-button
-                :loading="codeLoading"
-                :disabled="isDisable"
-                size="large"
-                round
-                @click="sendMsg"
-              >发送验证码</el-button>
-            </el-form-item>
-            <el-form-item>
-              <span class="status" style="color: white; margin: 5px">{{ statusMsg }}</span>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-form-item>
-
-      <el-form-item label="验证码" prop="code">
-        <el-col style="width:70%">
-          <el-input
-            v-model="ruleForm.code"
-            maxlength="6"
-            placeholder="请登录邮箱接收验证码"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="输入密码" prop="pwd">
-        <el-col style="width:70%">
-          <el-input v-model="ruleForm.pwd" type="password" placeholder="请输入密码" />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="cpwd">
-        <el-col style="width:70%">
-          <el-input v-model="ruleForm.cpwd" type="password" placeholder="请确认密码" />
-        </el-col>
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          style="width:76%;margin-top:30px;margin-bottom:1px;font-size: 20px"
-          @click="register"
-        >注 册</el-button>
-      </el-form-item>
-
-      <p class="tips">
-        <a type="primary" @click="$router.push('/login')">已有账号？立即登陆</a>
+    <div class="title-container" >
+      <p>
+        <i class="el-icon-user-solid" />
+        用户注册
       </p>
+    </div>
 
-    </el-form>
+    <el-row>
+      <el-col :span="9" :offset="7">
+        <el-form
+          ref="ruleForm"
+          class="register-form"
+          :model="ruleForm"
+          :rules="rules"
+          autocomplete="off"
+          label-position="right"
+          label-width="80px"
+          hide-required-asterisk="true"
+          size="large"
+        >
+
+          <el-form-item label="输入邮箱" prop="email">
+            <el-input
+              v-model="ruleForm.email"
+              placeholder="请输入邮箱并点击发送验证码"
+            />
+          </el-form-item>
+
+          <el-form-item label="验证码" prop="code">
+            <el-input
+              v-model="ruleForm.code"
+              maxlength="6"
+              placeholder="请登录邮箱接收验证码"
+            />
+          </el-form-item>
+
+          <el-form-item label="输入密码" prop="pwd">
+            <el-input v-model="ruleForm.pwd" type="password" placeholder="请输入密码" />
+          </el-form-item>
+
+          <el-form-item label="确认密码" prop="cpwd">
+            <el-input v-model="ruleForm.cpwd" type="password" placeholder="请确认密码" />
+          </el-form-item>
+
+          <el-form-item>
+            <el-col :span="11">
+              <el-button type="success" style="width: 100%" plain @click="register">立即注册</el-button>
+            </el-col>
+            <el-col :span="11" :offset="2">
+              <el-button type="primary" plain style="width: 100%" @click="$router.push('/login')">直接登陆</el-button>
+            </el-col>
+
+          </el-form-item>
+
+        </el-form>
+      </el-col>
+      <el-col :span="7">
+        <el-button
+          :loading="codeLoading"
+          :disabled="isDisable"
+          size="medium"
+          round
+          @click="sendMsg"
+          style="margin: 5px 0 0 10px"
+        >发送验证码</el-button>
+        <span class="status">{{ statusMsg }}</span>
+      </el-col>
+    </el-row>
 
     <div class="error">{{ error }}</div>
   </div>
@@ -164,7 +157,7 @@ export default {
           self.ruleForm.code = ''
           self.codeLoading = false
           self.isDisable = true
-          self.statusMsg = `$\n{count--}秒后重新发送`
+          // self.statusMsg = `$\n{count--}秒后重新发送`
           timerid = window.setInterval(function() {
             self.statusMsg = `\n${count--}秒后重新发送`
             if (count <= 0) {
@@ -233,8 +226,8 @@ $cursor: #fff;
 .register-container {
   .el-input {
     display: inline-block;
-    height: 47px;
-    width: 95%;
+    height: 40px;
+    width: 100%;
 
     input {
       background: rgba(0, 0, 0, 0.1);
@@ -256,7 +249,8 @@ $cursor: #fff;
   .el-form-item {
     label {
       font-style: normal;
-      font-size: 12px;
+      font-size: 14px;
+      padding-top: 5px;
       color: $light_gray;
     }
   }
@@ -271,44 +265,42 @@ $light_gray: #eee;
 .register-container {
   min-height: 100%;
   width: 100%;
-  //background-color: $bg;
   background-image: url("../../icons/bg.png");
-  background-repeat: no-repeat;
+  background-repeat: round;
   overflow: hidden;
+  padding-top: 80px;
 
   .register-form {
     position: relative;
-    width: 900px;
+    width: 700px;
     max-width: 100%;
-    padding: 200px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
 
   .tips {
     float: right;
-    font-size: 18px;
+    font-size: 12px;
     color: #bbb8b8;
-    margin-right: 22%;
-    margin-bottom: 10px;
 
     span {
       &:first-of-type {
-        margin-right: 16px;
       }
     }
   }
 
+  .status{
+    color: lightgrey;
+    margin-left: 10px;
+  }
+
   .title-container {
     position: relative;
-
-    .title {
-      font-size: 40px;
-      color: $light_gray;
-      margin: 0px auto 80px auto;
-      text-align: center;
-      font-weight: bold;
-    }
+    text-align: center;
+    color: white;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 30px;
   }
 }
 </style>

@@ -63,28 +63,26 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/model',
     component: Layout,
-    redirect: '/example/table',
     children: [
       {
-        path: 'table',
+        path: 'list',
         name: 'ModelList',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/modelList/index'),
         meta: { title: '模型列表', icon: 'el-icon-s-help' }
-
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/model',
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: 'upload',
         name: 'ModelUpload',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/modelUpload/index'),
         meta: { title: '模型上传', icon: 'form' }
       }
     ]

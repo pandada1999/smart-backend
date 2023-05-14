@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">SMART 神经网络鲁棒性评估平台</h3>
+        <p>SMART 神经网络鲁棒性评估平台</p>
       </div>
 
       <el-form-item prop="username">
@@ -44,7 +44,8 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;font-size: 20px"
+        plain
+        style="width:100%;margin-bottom:10px;font-size: 15px"
         @click.native.prevent="handleLogin"
       >登 录
       </el-button>
@@ -166,7 +167,7 @@ $cursor: #fff;
   .el-input {
     display: inline-block;
     //padding: 10px 10px 10px 10px;
-    font-size: 18px;
+    font-size: 14px;
     height: 47px;
     width: 85%;
 
@@ -204,23 +205,22 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  //background-color: $bg;
   background-image: url("../../icons/bg.png");
-  background-repeat: no-repeat;
+  background-repeat: round;
   overflow: hidden;
+  padding-top: 80px;
 
   .login-form {
     position: relative;
-    width: 700px;
+    width: 500px;
     max-width: 100%;
-    padding: 200px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
 
   .tips {
     float: right;
-    font-size: 18px;
+    font-size: 12px;
     color: #bbb8b8;
     margin-bottom: 10px;
 
@@ -242,14 +242,11 @@ $light_gray:#eee;
 
   .title-container {
     position: relative;
-
-    .title {
-      font-size: 40px;
-      color: $light_gray;
-      margin: 0px auto 80px auto;
-      text-align: center;
-      font-weight: bold;
-    }
+    text-align: center;
+    color: white;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 30px;
   }
 
   .show-pwd {

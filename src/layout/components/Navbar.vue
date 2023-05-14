@@ -13,14 +13,8 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              <i class="el-icon-user-solid"></i>
-              返回首页
-            </el-dropdown-item>
-          </router-link>
           <a target="_blank" href="https://github.com/pandada1999">
-            <el-dropdown-item divided>
+            <el-dropdown-item>
               <i class="el-icon-info"></i>
               联系作者</el-dropdown-item>
           </a>
